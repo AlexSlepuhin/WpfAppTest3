@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b735ff75ea734e249fc49bc1e3b8d22a" Name="Diagram1">
+        <EntityTypeShape EntityType="testbd2Model.ImageTable" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.sysdiagram" Width="1.5" PointX="2.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Вещи" Width="1.5" PointX="7.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Вещи_Инвентарь" Width="1.5" PointX="4.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Гильдия" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Город" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Достижения" Width="1.5" PointX="7.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Инвентарь" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Класс" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Персонаж" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Персонаж_Достижение" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Рынок" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="testbd2Model.Фракция" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="testbd2Model.FK_Инвентарь_Вещи1" ManuallyRouted="false" />
+        <AssociationConnector Association="testbd2Model.FK_Гильдия_Город" ManuallyRouted="false" />
+        <AssociationConnector Association="testbd2Model.FK_Персонаж_Гильдия" ManuallyRouted="false" />
+        <AssociationConnector Association="testbd2Model.FK_Город_Фракция" ManuallyRouted="false" />
+        <AssociationConnector Association="testbd2Model.FK_Персонаж_Достижение_Достижения" ManuallyRouted="false" />
+        <AssociationConnector Association="testbd2Model.FK_Инвентарь_Персонаж" ManuallyRouted="false" />
+        <AssociationConnector Association="testbd2Model.FK_Персонаж_Класс" ManuallyRouted="false" />
+        <AssociationConnector Association="testbd2Model.FK_Персонаж_Достижение_Персонаж" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

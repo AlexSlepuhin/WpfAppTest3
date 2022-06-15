@@ -23,6 +23,7 @@ namespace WpfAppTest3
 		public MainWindow()
 		{
 			InitializeComponent();
+			Manager.mainFrame = frame;
 		}
 	}
 }

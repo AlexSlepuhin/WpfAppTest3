@@ -1,0 +1,675 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище testbd2Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ImageTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Image" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Вещи">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Вещи_Инвентарь">
+          <Key>
+            <PropertyRef Name="ИД_Вещи" />
+            <PropertyRef Name="ИД_Инвентарь" />
+          </Key>
+          <Property Name="ИД_Вещи" Type="int" Nullable="false" />
+          <Property Name="ИД_Инвентарь" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Гильдия">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ИД_Города" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Город">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ИД_Фракции" Type="int" />
+        </EntityType>
+        <EntityType Name="Достижения">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Инвентарь">
+          <Key>
+            <PropertyRef Name="ИД_Вещи" />
+            <PropertyRef Name="ИД_Персонажа" />
+          </Key>
+          <Property Name="ИД_Вещи" Type="int" Nullable="false" />
+          <Property Name="ИД_Персонажа" Type="int" Nullable="false" />
+          <Property Name="Уровень_Вещи" Type="int" />
+        </EntityType>
+        <EntityType Name="Класс">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Персонаж">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ИД_Класса" Type="int" Nullable="false" />
+          <Property Name="Уровень" Type="int" Nullable="false" />
+          <Property Name="ИД_Гильдии" Type="int" />
+          <Property Name="Лидер_Гильдии" Type="bit" />
+          <Property Name="Изображение" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Персонаж_Достижение">
+          <Key>
+            <PropertyRef Name="ИД_Персонажа" />
+            <PropertyRef Name="ИД_Достижение" />
+          </Key>
+          <Property Name="ИД_Персонажа" Type="int" Nullable="false" />
+          <Property Name="ИД_Достижение" Type="int" Nullable="false" />
+          <Property Name="Дата_получения" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Рынок">
+          <Key>
+            <PropertyRef Name="ИД_Вещи_Инвенторя" />
+          </Key>
+          <Property Name="ИД_Вещи_Инвенторя" Type="int" Nullable="false" />
+          <Property Name="Цена" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Фракция">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Гильдия_Город">
+          <End Role="Город" Type="Self.Город" Multiplicity="1" />
+          <End Role="Гильдия" Type="Self.Гильдия" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Город">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Гильдия">
+              <PropertyRef Name="ИД_Города" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Город_Фракция">
+          <End Role="Фракция" Type="Self.Фракция" Multiplicity="0..1" />
+          <End Role="Город" Type="Self.Город" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Фракция">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Город">
+              <PropertyRef Name="ИД_Фракции" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Инвентарь_Вещи1">
+          <End Role="Вещи" Type="Self.Вещи" Multiplicity="0..1" />
+          <End Role="Инвентарь" Type="Self.Инвентарь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Вещи">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Инвентарь">
+              <PropertyRef Name="Уровень_Вещи" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Инвентарь_Персонаж">
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="1" />
+          <End Role="Инвентарь" Type="Self.Инвентарь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Персонаж">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Инвентарь">
+              <PropertyRef Name="ИД_Персонажа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Гильдия">
+          <End Role="Гильдия" Type="Self.Гильдия" Multiplicity="0..1" />
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Гильдия">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Персонаж">
+              <PropertyRef Name="ИД_Гильдии" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Достижение_Достижения">
+          <End Role="Достижения" Type="Self.Достижения" Multiplicity="1" />
+          <End Role="Персонаж_Достижение" Type="Self.Персонаж_Достижение" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Достижения">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Персонаж_Достижение">
+              <PropertyRef Name="ИД_Достижение" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Достижение_Персонаж">
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="1" />
+          <End Role="Персонаж_Достижение" Type="Self.Персонаж_Достижение" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Персонаж">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Персонаж_Достижение">
+              <PropertyRef Name="ИД_Персонажа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Класс">
+          <End Role="Класс" Type="Self.Класс" Multiplicity="1" />
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Класс">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Персонаж">
+              <PropertyRef Name="ИД_Класса" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище testbd2ModelContainer">
+          <EntitySet Name="ImageTable" EntityType="Self.ImageTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Вещи" EntityType="Self.Вещи" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Вещи_Инвентарь" EntityType="Self.Вещи_Инвентарь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Гильдия" EntityType="Self.Гильдия" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Город" EntityType="Self.Город" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Достижения" EntityType="Self.Достижения" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Инвентарь" EntityType="Self.Инвентарь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Класс" EntityType="Self.Класс" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Персонаж" EntityType="Self.Персонаж" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Персонаж_Достижение" EntityType="Self.Персонаж_Достижение" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Рынок" EntityType="Self.Рынок" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Фракция" EntityType="Self.Фракция" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Гильдия_Город" Association="Self.FK_Гильдия_Город">
+            <End Role="Город" EntitySet="Город" />
+            <End Role="Гильдия" EntitySet="Гильдия" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Город_Фракция" Association="Self.FK_Город_Фракция">
+            <End Role="Фракция" EntitySet="Фракция" />
+            <End Role="Город" EntitySet="Город" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Инвентарь_Вещи1" Association="Self.FK_Инвентарь_Вещи1">
+            <End Role="Вещи" EntitySet="Вещи" />
+            <End Role="Инвентарь" EntitySet="Инвентарь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Инвентарь_Персонаж" Association="Self.FK_Инвентарь_Персонаж">
+            <End Role="Персонаж" EntitySet="Персонаж" />
+            <End Role="Инвентарь" EntitySet="Инвентарь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Гильдия" Association="Self.FK_Персонаж_Гильдия">
+            <End Role="Гильдия" EntitySet="Гильдия" />
+            <End Role="Персонаж" EntitySet="Персонаж" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Достижение_Достижения" Association="Self.FK_Персонаж_Достижение_Достижения">
+            <End Role="Достижения" EntitySet="Достижения" />
+            <End Role="Персонаж_Достижение" EntitySet="Персонаж_Достижение" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Достижение_Персонаж" Association="Self.FK_Персонаж_Достижение_Персонаж">
+            <End Role="Персонаж" EntitySet="Персонаж" />
+            <End Role="Персонаж_Достижение" EntitySet="Персонаж_Достижение" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Класс" Association="Self.FK_Персонаж_Класс">
+            <End Role="Класс" EntitySet="Класс" />
+            <End Role="Персонаж" EntitySet="Персонаж" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testbd2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ImageTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Вещи">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" />
+          <Property Name="Название" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Инвентарь" Relationship="Self.FK_Инвентарь_Вещи1" FromRole="Вещи" ToRole="Инвентарь" />
+        </EntityType>
+        <EntityType Name="Вещи_Инвентарь">
+          <Key>
+            <PropertyRef Name="ИД_Вещи" />
+            <PropertyRef Name="ИД_Инвентарь" />
+          </Key>
+          <Property Name="ИД_Вещи" Type="Int32" Nullable="false" />
+          <Property Name="ИД_Инвентарь" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Гильдия">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ИД_Города" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Город" Relationship="Self.FK_Гильдия_Город" FromRole="Гильдия" ToRole="Город" />
+          <NavigationProperty Name="Персонаж" Relationship="Self.FK_Персонаж_Гильдия" FromRole="Гильдия" ToRole="Персонаж" />
+        </EntityType>
+        <EntityType Name="Город">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ИД_Фракции" Type="Int32" />
+          <NavigationProperty Name="Гильдия" Relationship="Self.FK_Гильдия_Город" FromRole="Город" ToRole="Гильдия" />
+          <NavigationProperty Name="Фракция" Relationship="Self.FK_Город_Фракция" FromRole="Город" ToRole="Фракция" />
+        </EntityType>
+        <EntityType Name="Достижения">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Персонаж_Достижение" Relationship="Self.FK_Персонаж_Достижение_Достижения" FromRole="Достижения" ToRole="Персонаж_Достижение" />
+        </EntityType>
+        <EntityType Name="Инвентарь">
+          <Key>
+            <PropertyRef Name="ИД_Вещи" />
+            <PropertyRef Name="ИД_Персонажа" />
+          </Key>
+          <Property Name="ИД_Вещи" Type="Int32" Nullable="false" />
+          <Property Name="ИД_Персонажа" Type="Int32" Nullable="false" />
+          <Property Name="Уровень_Вещи" Type="Int32" />
+          <NavigationProperty Name="Вещи" Relationship="Self.FK_Инвентарь_Вещи1" FromRole="Инвентарь" ToRole="Вещи" />
+          <NavigationProperty Name="Персонаж" Relationship="Self.FK_Инвентарь_Персонаж" FromRole="Инвентарь" ToRole="Персонаж" />
+        </EntityType>
+        <EntityType Name="Класс">
+          <Key>
+            <PropertyRef Name="Ид" />
+          </Key>
+          <Property Name="Ид" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Персонаж" Relationship="Self.FK_Персонаж_Класс" FromRole="Класс" ToRole="Персонаж" />
+        </EntityType>
+        <EntityType Name="Персонаж">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ИД_Класса" Type="Int32" Nullable="false" />
+          <Property Name="Уровень" Type="Int32" Nullable="false" />
+          <Property Name="ИД_Гильдии" Type="Int32" />
+          <Property Name="Лидер_Гильдии" Type="Boolean" />
+          <Property Name="Изображение" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Гильдия" Relationship="Self.FK_Персонаж_Гильдия" FromRole="Персонаж" ToRole="Гильдия" />
+          <NavigationProperty Name="Инвентарь" Relationship="Self.FK_Инвентарь_Персонаж" FromRole="Персонаж" ToRole="Инвентарь" />
+          <NavigationProperty Name="Класс" Relationship="Self.FK_Персонаж_Класс" FromRole="Персонаж" ToRole="Класс" />
+          <NavigationProperty Name="Персонаж_Достижение" Relationship="Self.FK_Персонаж_Достижение_Персонаж" FromRole="Персонаж" ToRole="Персонаж_Достижение" />
+        </EntityType>
+        <EntityType Name="Персонаж_Достижение">
+          <Key>
+            <PropertyRef Name="ИД_Персонажа" />
+            <PropertyRef Name="ИД_Достижение" />
+          </Key>
+          <Property Name="ИД_Персонажа" Type="Int32" Nullable="false" />
+          <Property Name="ИД_Достижение" Type="Int32" Nullable="false" />
+          <Property Name="Дата_получения" Type="DateTime" />
+          <NavigationProperty Name="Достижения" Relationship="Self.FK_Персонаж_Достижение_Достижения" FromRole="Персонаж_Достижение" ToRole="Достижения" />
+          <NavigationProperty Name="Персонаж" Relationship="Self.FK_Персонаж_Достижение_Персонаж" FromRole="Персонаж_Достижение" ToRole="Персонаж" />
+        </EntityType>
+        <EntityType Name="Рынок">
+          <Key>
+            <PropertyRef Name="ИД_Вещи_Инвенторя" />
+          </Key>
+          <Property Name="ИД_Вещи_Инвенторя" Type="Int32" Nullable="false" />
+          <Property Name="Цена" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Фракция">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Город" Relationship="Self.FK_Город_Фракция" FromRole="Фракция" ToRole="Город" />
+        </EntityType>
+        <Association Name="FK_Инвентарь_Вещи1">
+          <End Role="Вещи" Type="Self.Вещи" Multiplicity="0..1" />
+          <End Role="Инвентарь" Type="Self.Инвентарь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Вещи">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Инвентарь">
+              <PropertyRef Name="Уровень_Вещи" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Гильдия_Город">
+          <End Role="Город" Type="Self.Город" Multiplicity="1" />
+          <End Role="Гильдия" Type="Self.Гильдия" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Город">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Гильдия">
+              <PropertyRef Name="ИД_Города" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Гильдия">
+          <End Role="Гильдия" Type="Self.Гильдия" Multiplicity="0..1" />
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Гильдия">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Персонаж">
+              <PropertyRef Name="ИД_Гильдии" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Город_Фракция">
+          <End Role="Фракция" Type="Self.Фракция" Multiplicity="0..1" />
+          <End Role="Город" Type="Self.Город" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Фракция">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Город">
+              <PropertyRef Name="ИД_Фракции" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Достижение_Достижения">
+          <End Role="Достижения" Type="Self.Достижения" Multiplicity="1" />
+          <End Role="Персонаж_Достижение" Type="Self.Персонаж_Достижение" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Достижения">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Персонаж_Достижение">
+              <PropertyRef Name="ИД_Достижение" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Инвентарь_Персонаж">
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="1" />
+          <End Role="Инвентарь" Type="Self.Инвентарь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Персонаж">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Инвентарь">
+              <PropertyRef Name="ИД_Персонажа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Класс">
+          <End Role="Класс" Type="Self.Класс" Multiplicity="1" />
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Класс">
+              <PropertyRef Name="Ид" />
+            </Principal>
+            <Dependent Role="Персонаж">
+              <PropertyRef Name="ИД_Класса" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Персонаж_Достижение_Персонаж">
+          <End Role="Персонаж" Type="Self.Персонаж" Multiplicity="1" />
+          <End Role="Персонаж_Достижение" Type="Self.Персонаж_Достижение" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Персонаж">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Персонаж_Достижение">
+              <PropertyRef Name="ИД_Персонажа" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testbd2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ImageTables" EntityType="Self.ImageTable" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Вещи" EntityType="Self.Вещи" />
+          <EntitySet Name="Вещи_Инвентарь" EntityType="Self.Вещи_Инвентарь" />
+          <EntitySet Name="Гильдия" EntityType="Self.Гильдия" />
+          <EntitySet Name="Город" EntityType="Self.Город" />
+          <EntitySet Name="Достижения" EntityType="Self.Достижения" />
+          <EntitySet Name="Инвентарь" EntityType="Self.Инвентарь" />
+          <EntitySet Name="Класс" EntityType="Self.Класс" />
+          <EntitySet Name="Персонаж" EntityType="Self.Персонаж" />
+          <EntitySet Name="Персонаж_Достижение" EntityType="Self.Персонаж_Достижение" />
+          <EntitySet Name="Рынок" EntityType="Self.Рынок" />
+          <EntitySet Name="Фракция" EntityType="Self.Фракция" />
+          <AssociationSet Name="FK_Инвентарь_Вещи1" Association="Self.FK_Инвентарь_Вещи1">
+            <End Role="Вещи" EntitySet="Вещи" />
+            <End Role="Инвентарь" EntitySet="Инвентарь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Гильдия_Город" Association="Self.FK_Гильдия_Город">
+            <End Role="Город" EntitySet="Город" />
+            <End Role="Гильдия" EntitySet="Гильдия" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Гильдия" Association="Self.FK_Персонаж_Гильдия">
+            <End Role="Гильдия" EntitySet="Гильдия" />
+            <End Role="Персонаж" EntitySet="Персонаж" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Город_Фракция" Association="Self.FK_Город_Фракция">
+            <End Role="Фракция" EntitySet="Фракция" />
+            <End Role="Город" EntitySet="Город" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Достижение_Достижения" Association="Self.FK_Персонаж_Достижение_Достижения">
+            <End Role="Достижения" EntitySet="Достижения" />
+            <End Role="Персонаж_Достижение" EntitySet="Персонаж_Достижение" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Инвентарь_Персонаж" Association="Self.FK_Инвентарь_Персонаж">
+            <End Role="Персонаж" EntitySet="Персонаж" />
+            <End Role="Инвентарь" EntitySet="Инвентарь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Класс" Association="Self.FK_Персонаж_Класс">
+            <End Role="Класс" EntitySet="Класс" />
+            <End Role="Персонаж" EntitySet="Персонаж" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Персонаж_Достижение_Персонаж" Association="Self.FK_Персонаж_Достижение_Персонаж">
+            <End Role="Персонаж" EntitySet="Персонаж" />
+            <End Role="Персонаж_Достижение" EntitySet="Персонаж_Достижение" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище testbd2ModelContainer" CdmEntityContainer="testbd2Entities">
+          <EntitySetMapping Name="ImageTables">
+            <EntityTypeMapping TypeName="testbd2Model.ImageTable">
+              <MappingFragment StoreEntitySet="ImageTable">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="testbd2Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Вещи">
+            <EntityTypeMapping TypeName="testbd2Model.Вещи">
+              <MappingFragment StoreEntitySet="Вещи">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Вещи_Инвентарь">
+            <EntityTypeMapping TypeName="testbd2Model.Вещи_Инвентарь">
+              <MappingFragment StoreEntitySet="Вещи_Инвентарь">
+                <ScalarProperty Name="ИД_Вещи" ColumnName="ИД_Вещи" />
+                <ScalarProperty Name="ИД_Инвентарь" ColumnName="ИД_Инвентарь" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Гильдия">
+            <EntityTypeMapping TypeName="testbd2Model.Гильдия">
+              <MappingFragment StoreEntitySet="Гильдия">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="ИД_Города" ColumnName="ИД_Города" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Город">
+            <EntityTypeMapping TypeName="testbd2Model.Город">
+              <MappingFragment StoreEntitySet="Город">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="ИД_Фракции" ColumnName="ИД_Фракции" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Достижения">
+            <EntityTypeMapping TypeName="testbd2Model.Достижения">
+              <MappingFragment StoreEntitySet="Достижения">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Инвентарь">
+            <EntityTypeMapping TypeName="testbd2Model.Инвентарь">
+              <MappingFragment StoreEntitySet="Инвентарь">
+                <ScalarProperty Name="ИД_Вещи" ColumnName="ИД_Вещи" />
+                <ScalarProperty Name="ИД_Персонажа" ColumnName="ИД_Персонажа" />
+                <ScalarProperty Name="Уровень_Вещи" ColumnName="Уровень_Вещи" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Класс">
+            <EntityTypeMapping TypeName="testbd2Model.Класс">
+              <MappingFragment StoreEntitySet="Класс">
+                <ScalarProperty Name="Ид" ColumnName="Ид" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Персонаж">
+            <EntityTypeMapping TypeName="testbd2Model.Персонаж">
+              <MappingFragment StoreEntitySet="Персонаж">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="ИД_Класса" ColumnName="ИД_Класса" />
+                <ScalarProperty Name="Уровень" ColumnName="Уровень" />
+                <ScalarProperty Name="ИД_Гильдии" ColumnName="ИД_Гильдии" />
+                <ScalarProperty Name="Лидер_Гильдии" ColumnName="Лидер_Гильдии" />
+                <ScalarProperty Name="Изображение" ColumnName="Изображение" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Персонаж_Достижение">
+            <EntityTypeMapping TypeName="testbd2Model.Персонаж_Достижение">
+              <MappingFragment StoreEntitySet="Персонаж_Достижение">
+                <ScalarProperty Name="ИД_Персонажа" ColumnName="ИД_Персонажа" />
+                <ScalarProperty Name="ИД_Достижение" ColumnName="ИД_Достижение" />
+                <ScalarProperty Name="Дата_получения" ColumnName="Дата_получения" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Рынок">
+            <EntityTypeMapping TypeName="testbd2Model.Рынок">
+              <MappingFragment StoreEntitySet="Рынок">
+                <ScalarProperty Name="ИД_Вещи_Инвенторя" ColumnName="ИД_Вещи_Инвенторя" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Фракция">
+            <EntityTypeMapping TypeName="testbd2Model.Фракция">
+              <MappingFragment StoreEntitySet="Фракция">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
